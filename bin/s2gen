@@ -1,0 +1,23 @@
+#!/bin/bash
+
+EXEC_LOC="`dirname "$0"`"
+
+realpath () {
+(
+    echo "$(pwd -P)/$EXEC_LOC"
+)
+}
+
+declare -r real_script_path="$(realpath "$0")"
+
+declare -r app_home="$(realpath "$(dirname "$real_script_path")")"
+
+declare -r lib_dir="$EXEC_LOC/../lib"
+
+declare -a app_mainclass=("com.appliedscala.generator.SiteGenerator")
+
+declare -r script_conf_file="${app_home}/../conf/application.ini"
+declare -r app_classpath="$lib_dir/default.s2gen-0.2.3.jar:$lib_dir/org.scala-lang.scala-library-2.11.8.jar:$lib_dir/org.pegdown.pegdown-1.6.0.jar:$lib_dir/org.parboiled.parboiled-java-1.1.7.jar:$lib_dir/org.parboiled.parboiled-core-1.1.7.jar:$lib_dir/org.ow2.asm.asm-5.0.3.jar:$lib_dir/org.ow2.asm.asm-tree-5.0.3.jar:$lib_dir/org.ow2.asm.asm-analysis-5.0.3.jar:$lib_dir/org.ow2.asm.asm-util-5.0.3.jar:$lib_dir/org.freemarker.freemarker-2.3.21.jar:$lib_dir/org.slf4j.slf4j-api-1.7.19.jar:$lib_dir/ch.qos.logback.logback-classic-1.1.6.jar:$lib_dir/ch.qos.logback.logback-core-1.1.6.jar:$lib_dir/org.scalaz.scalaz-core_2.11-7.2.1.jar:$lib_dir/org.scalaz.scalaz-concurrent_2.11-7.2.1.jar:$lib_dir/org.scalaz.scalaz-effect_2.11-7.2.1.jar:$lib_dir/com.beachape.filemanagement.schwatcher_2.11-0.3.1.jar:$lib_dir/com.typesafe.akka.akka-actor_2.11-2.4.1.jar:$lib_dir/com.typesafe.config-1.3.0.jar:$lib_dir/io.reactivex.rxscala_2.11-0.25.1.jar:$lib_dir/io.reactivex.rxjava-1.0.17.jar:$lib_dir/commons-io.commons-io-2.4.jar:$lib_dir/commons-cli.commons-cli-1.3.1.jar"
+
+
+exec java -cp $app_classpath $app_mainclass $@
